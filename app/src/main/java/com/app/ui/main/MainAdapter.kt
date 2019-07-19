@@ -1,31 +1,36 @@
 package com.app.ui.main
 
-import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.galleryimage.R
+import com.app.galleryimage.databinding.MainAdapterBinding
 import com.app.model.main.PhotoListModel
 import com.app.util.DiffUtilCallBack
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.request.ImageRequest
-import kotlinx.android.synthetic.main.main_adapter.view.*
 
 class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(DiffUtilCallBack())
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.main_adapter, parent, false)
-        return MyViewHolder(view)
+        /*val view = LayoutInflater.from(parent.context).inflate(R.layout.main_adapter, parent, false)
+        return MyViewHolder(view)*/
+
+        val binding : MainAdapterBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.main_adapter, parent, false)
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        getItem(position)?.let { holder.bindPost(it) }
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(private val binding : MainAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(photoList : PhotoListModel) {
+            binding.dataManager = photoList
+        }
+    }
+
+    /*class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val imageId = itemView.imageView
         private val TAG : String = "MainActivity"
         fun bindPost(redditPost : PhotoListModel){
@@ -42,5 +47,5 @@ class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(D
                 Log.e(TAG, "loadImageData id: "+id)
             }
         }
-    }
+    }*/
 }

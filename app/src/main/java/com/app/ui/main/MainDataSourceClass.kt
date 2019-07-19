@@ -30,7 +30,7 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
         GlobalScope.launch {
             try
             {
-                val response = mainApi.fetchImageData(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch,1,
+                val response = mainApi.fetchImageDataAsync(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch,1,
                 perPage, format, noJsonCallback).await()
                 when
                 {
@@ -62,7 +62,7 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
         GlobalScope.launch {
             try
             {
-                val response = mainApi.fetchImageData(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch,params.key,
+                val response = mainApi.fetchImageDataAsync(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch,params.key,
                     perPage, format, noJsonCallback).await()
                 when
                 {

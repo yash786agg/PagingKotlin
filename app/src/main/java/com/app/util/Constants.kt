@@ -8,6 +8,8 @@ class Constants
 
         const val flickrPhotosSearch : String = "flickr.photos.search"
 
+        const val flickrPhotosGetSizes : String = "flickr.photos.getSizes"
+
         const val kittenSearch : String = "kitten"
 
         const val format : String = "json"

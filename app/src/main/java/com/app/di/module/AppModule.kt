@@ -20,10 +20,10 @@ class AppModule
     @Module
     companion object
     {
-        @JvmStatic
+       /* @JvmStatic
         @Singleton
         @Provides
-        fun providesDraweeController() : PipelineDraweeControllerBuilder = Fresco.newDraweeControllerBuilder()
+        fun providesDraweeController() : PipelineDraweeControllerBuilder = Fresco.newDraweeControllerBuilder()*/
 
         @JvmStatic
         @Singleton
