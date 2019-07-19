@@ -1,5 +1,6 @@
 package com.app.ui.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +24,13 @@ class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(D
 
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val titleText = itemView.title
-
+        private val TAG : String = "MainActivity"
         fun bindPost(redditPost : PhotoListModel){
             with(redditPost){
                 titleText.text = title
+
+                Log.e(TAG, "loadImageData title: "+title)
+                Log.e(TAG, "loadImageData id: "+id)
             }
         }
     }

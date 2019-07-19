@@ -13,8 +13,6 @@ import com.app.util.Constants.Companion.perPage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-//https://github.com/wangerekaharun/AndroidPagingWithCoroutines
-
 class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
 {
     private val TAG : String = "MainActivity"
@@ -65,7 +63,7 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                         Log.e(TAG, "loadAfter redditPostsitial: "+items!!)
                         Log.e(TAG, "loadAfter redditPostsitial size: "+items.size)
 
-                        callback.onResult(items ?: listOf(), nextKey)
+                        callback.onResult(items, nextKey)
                     }
                 }
 
@@ -73,53 +71,7 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                 Log.e(TAG, "Failed to fetch loadAfter!")
             }
         }
-
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>) {}
-
-    /*private val TAG : String = "MainActivity"
-
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PhotoListModel>)
-    {
-        Log.e(TAG, "MainDataSourceClass loadInitial")
-        GlobalScope.launch(Dispatchers.Default)
-        {
-            val response = mainRepository.imageData(1)
-            Log.e(TAG, "MainDataSourceClass loadInitial response: "+response.photos.photo[0].id)
-
-
-            withContext(Dispatchers.Main) {
-                // Perform operations on the main thread
-                //imageData!!.value = NetworkResource.Success(response)
-
-                Log.e(TAG, "MainDataSourceClass loadInitial response inside: "+response.photos.photo)
-
-                callback.onResult(response.photos.photo,null,2)
-            }
-        }
-    }
-
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>) {
-    }
-
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>)
-    {
-        GlobalScope.launch(Dispatchers.Default)
-        {
-            val response = mainRepository.imageData(params.key)
-
-            Log.e(TAG, "MainDataSourceClass loadBefore response: "+response.photos.photo[0].id)
-
-            withContext(Dispatchers.Main) {
-                // Perform operations on the main thread
-                //imageData!!.value = NetworkResource.Success(response)
-
-                callback.onResult(response.photos.photo, params.key + 1)
-
-                Log.e(TAG, "MainDataSourceClass loadBefore response inside: "+response.photos.photo)
-            }
-        }
-    }*/
-
 }

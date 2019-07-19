@@ -42,41 +42,4 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
         }
         return LivePagedListBuilder(dataSourceFactory, config)
     }
-
-    /*private var listLiveData: LiveData<PagedList<PhotoListModel>>? = null
-    private var mainDataSourceFactory : MainDataSourceFactory? = null
-    private lateinit var mainRepository: MainRepository
-
-    private val TAG : String = "MainActivity"
-
-    @Inject
-    fun MainViewModel(mainRepository: MainRepository)
-    {
-        this.mainRepository = mainRepository
-
-        mainDataSourceFactory = MainDataSourceFactory(mainRepository)
-
-        Log.e(TAG, "MainViewModel mainDataSourceFactory: $mainDataSourceFactory")
-
-        initializePaging()
-    }
-
-    private fun initializePaging()
-    {
-        val pagedListConfig = PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(10)
-            .setPageSize(20).build()
-
-        listLiveData = LivePagedListBuilder(mainDataSourceFactory!!, pagedListConfig).build()
-
-        Log.e(TAG, "MainViewModel listLiveData: $listLiveData")
-    }
-
-    fun getListLiveData(): LiveData<PagedList<PhotoListModel>>
-    {
-        return listLiveData!!
-    }*/
-
-
 }
