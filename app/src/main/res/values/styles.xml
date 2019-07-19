@@ -13,9 +13,19 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="WrapContent">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="MatchWidthVertical">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <!-- Main Adapter SimpleDraweeView. -->
+
+    <style name="mainAdapterImageView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_150dp</item>
+        <item name="android:layout_margin">@dimen/dimen_5dp</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 </resources>

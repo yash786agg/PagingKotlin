@@ -3,16 +3,26 @@ package com.app.ui.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations.switchMap
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.app.model.main.PhotoListModel
 import com.app.network.main.MainApi
+import com.app.util.NetworkState
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(app)
 {
+    // FOR DATA ---
     var postsLiveData : LiveData<PagedList<PhotoListModel>>
+    val data = MutableLiveData<MainDataSourceClass>()
+
+    // OBSERVABLES ---
+    val networkState: LiveData<NetworkState>? = switchMap(data) { it.getNetworkState() }
+
+    // UTILS ---
 
     init
     {
@@ -26,10 +36,13 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
     private lateinit var mainApi: MainApi
 
     @Inject
-    fun MainViewModel(mainApi: MainApi)
-    {
+    fun MainViewModel(mainApi: MainApi) {
         this.mainApi = mainApi
     }
+
+    /**
+     * Fetch a list of Photo [id,title] by PhotoListModel
+     */
 
     fun getPosts():LiveData<PagedList<PhotoListModel>> = postsLiveData
 
@@ -37,9 +50,12 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
 
         val dataSourceFactory = object : DataSource.Factory<Int, PhotoListModel>() {
             override fun create(): MainDataSourceClass {
-                return MainDataSourceClass(mainApi)
+                val source = MainDataSourceClass(mainApi)
+                data.postValue(source)
+                return source
             }
         }
+
         return LivePagedListBuilder(dataSourceFactory, config)
     }
 }

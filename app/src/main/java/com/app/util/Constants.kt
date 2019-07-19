@@ -15,5 +15,9 @@ class Constants
         const val perPage : Long = 20
 
         const val noJsonCallback : Long = 1
+
+        const val loading = "Loading"
+
+        const val success = "Success"
     }
 }
