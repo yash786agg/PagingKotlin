@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(app)
 {
     // FOR DATA ---
-    private var postsLiveData : LiveData<PagedList<PhotoListModel>>
+    private var imgsLiveData : LiveData<PagedList<PhotoListModel>>
     val data = MutableLiveData<MainDataSourceClass>()
 
     // OBSERVABLES ---
@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
         val config = PagedList.Config.Builder().setPageSize(20)
             .setEnablePlaceholders(true).build()
 
-        postsLiveData = initializedPagedListBuilder(config).build()
+        imgsLiveData = initializedPagedListBuilder(config).build()
     }
 
     private lateinit var mainApi: MainApi
@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
      * Fetch a list of Photo [id,title] by PhotoListModel
      */
 
-    fun getData() : LiveData<PagedList<PhotoListModel>> = postsLiveData
+    fun getData() : LiveData<PagedList<PhotoListModel>> = imgsLiveData
 
     private fun initializedPagedListBuilder(config: PagedList.Config): LivePagedListBuilder<Int, PhotoListModel> {
 
