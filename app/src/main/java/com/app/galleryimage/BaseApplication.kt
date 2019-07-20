@@ -23,4 +23,11 @@ class BaseApplication : DaggerApplication()
 
         return bindingComponent
     }
+
+    override fun onLowMemory()
+    {
+        super.onLowMemory()
+        val imagePipeline = Fresco.getImagePipeline()
+        imagePipeline.clearCaches()
+    }
 }

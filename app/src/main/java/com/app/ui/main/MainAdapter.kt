@@ -12,6 +12,7 @@ import com.app.util.DiffUtilCallBack
 
 class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(DiffUtilCallBack())
 {
+    // OVERRIDE ---
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding : MainAdapterBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context)
             , R.layout.main_adapter, parent, false)

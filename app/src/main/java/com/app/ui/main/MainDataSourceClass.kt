@@ -1,6 +1,5 @@
 package com.app.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -19,45 +18,41 @@ import kotlinx.coroutines.launch
 class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
 {
     // FOR DATA ---
-    private val networkState = MutableLiveData<NetworkState>()
-
-    private val TAG : String = "MainActivity"
+    private val networkState = MutableLiveData<NetworkState<String>>()
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PhotoListModel>)
     {
-        networkState.postValue(NetworkState.LOADING)
+        networkState.postValue(NetworkState.Loading())
 
         GlobalScope.launch {
             try
             {
                 val response = mainApi.fetchImageDataAsync(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch,1,
                 perPage, format, noJsonCallback).await()
-                when
-                {
-                    response.isSuccessful -> {
-                        networkState.postValue(NetworkState.SUCCESS)
-                        val listing = response.body()?.photos
-                        val items = listing?.photo
-                        Log.e(TAG, "loadInitial redditPostsitial: "+items!!)
-                        Log.e(TAG, "loadInitial redditPostsitial size: "+items.size)
-                        //callback.onResult(items,null,2)
-                        callback.onResult(items,0,perPage,null,2)
+
+                when {
+                    response.isSuccessful ->
+                    {
+                        networkState.postValue(NetworkState.Success())
+
+                        val items = response.body()?.photos?.photo
+
+                        if(items != null)
+                            callback.onResult(items,0,perPage,null,2)
+                        else
+                            networkState.postValue(NetworkState.Error(response.errorBody().toString()))
                     }
                 }
             }
-            catch (exception : Exception)
-            {
-                networkState.postValue(NetworkState.FAILED)
-                Log.e(TAG, "Failed to fetch loadInitial!: "+exception.message)
+            catch (exception : Exception) {
+                networkState.postValue(NetworkState.Error(exception.message.toString()))
             }
         }
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>)
     {
-        Log.e(TAG, "Loading Rang " + params.key + " Count " + params.requestedLoadSize)
-
-        networkState.postValue(NetworkState.LOADING)
+        networkState.postValue(NetworkState.Loading())
 
         GlobalScope.launch {
             try
@@ -68,26 +63,26 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                 {
                     response.isSuccessful ->
                     {
-                        networkState.postValue(NetworkState.SUCCESS)
+                        networkState.postValue(NetworkState.Success())
                         val nextKey = (if(params.key == response.body()!!.photos.pages) null else params.key + 1)
-                        val listing = response.body()?.photos
-                        val items = listing?.photo
 
-                        Log.e(TAG, "loadAfter redditPostsitial: "+items!!)
-                        Log.e(TAG, "loadAfter redditPostsitial size: "+items.size)
+                        val items = response.body()?.photos?.photo
 
-                        callback.onResult(items, nextKey)
+                        if(items != null)
+                            callback.onResult(items, nextKey)
+                        else
+                            networkState.postValue(NetworkState.Error(response.errorBody().toString()))
                     }
                 }
 
-            }catch (exception : Exception){
-                networkState.postValue(NetworkState.FAILED)
-                Log.e(TAG, "Failed to fetch loadAfter!")
+            }
+            catch (exception : Exception){
+                networkState.postValue(NetworkState.Error(exception.message.toString()))
             }
         }
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>) {}
 
-    fun getNetworkState(): LiveData<NetworkState> = networkState
+    fun getNetworkState(): LiveData<NetworkState<String>> = networkState
 }

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GalleryImage</string>
+    <string name="error_network_connection">Network error. Please check your Internet connection</string>
+    <string name="something_went_wrong">Something went wrong</string>
+
 </resources>
