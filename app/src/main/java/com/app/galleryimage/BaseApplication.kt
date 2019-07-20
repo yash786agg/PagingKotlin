@@ -7,14 +7,11 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
 
-
 class BaseApplication : DaggerApplication()
 {
     override fun applicationInjector(): AndroidInjector<out DaggerApplication>
     {
         Fresco.initialize(this)
-
-        //val appComponent = DaggerAppComponent.builder().application(this)
 
         val bindingComponent = DaggerAppComponent.builder()
             .bindingModule(BindingModule)
@@ -25,15 +22,5 @@ class BaseApplication : DaggerApplication()
         DataBindingUtil.setDefaultComponent(bindingComponent)
 
         return bindingComponent
-        /*val appComponent = DaggerAppComponent.builder().application(this).build()
-
-        val bindingSubComponent = appComponent.bindingSubcomponentBuilder()
-            .bindingModule(BindingModule)
-            .fresco(Fresco.newDraweeControllerBuilder())
-            .build()
-        DataBindingUtil.setDefaultComponent(bindingSubComponent)
-
-        return appComponent*/
-        //return DaggerAppComponent.builder().application(this).build()
     }
 }

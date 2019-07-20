@@ -13,10 +13,8 @@ import com.app.util.DiffUtilCallBack
 class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(DiffUtilCallBack())
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        /*val view = LayoutInflater.from(parent.context).inflate(R.layout.main_adapter, parent, false)
-        return MyViewHolder(view)*/
-
-        val binding : MainAdapterBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.main_adapter, parent, false)
+        val binding : MainAdapterBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context)
+            , R.layout.main_adapter, parent, false)
         return MyViewHolder(binding)
     }
 
@@ -24,28 +22,11 @@ class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(D
         getItem(position)?.let { holder.bind(it) }
     }
 
+    override fun getItemViewType(position: Int): Int = position
+
     class MyViewHolder(private val binding : MainAdapterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(photoList : PhotoListModel) {
             binding.dataManager = photoList
         }
     }
-
-    /*class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val imageId = itemView.imageView
-        private val TAG : String = "MainActivity"
-        fun bindPost(redditPost : PhotoListModel){
-            with(redditPost){
-                //titleText.text = title
-
-                //https://farm6.staticflickr.com/5800/31456463045_5a0af4ddc8_q.jpg
-
-                val draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri(Uri.parse("https://live.staticflickr.com/5800/31456463045_5a0af4ddc8_q.jpg")))
-                    .setOldController(itemView.imageView.controller).build()
-                itemView.imageView.controller = draweeController
-
-                Log.e(TAG, "loadImageData title: "+title)
-                Log.e(TAG, "loadImageData id: "+id)
-            }
-        }
-    }*/
 }

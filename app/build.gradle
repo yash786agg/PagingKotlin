@@ -22,12 +22,12 @@ android {
         debug
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\"" //9a95c68a9c6ec61104cd3967dcbb8bd3
+            buildConfigField "String", 'API_Key', "\"your_api_key\"" //9a95c68a9c6ec61104cd3967dcbb8bd3
         }
         release
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
+            buildConfigField "String", 'API_Key', "\"your_api_key\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -36,6 +36,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    androidExtensions {
+        experimental = true
     }
 }
 
@@ -81,10 +85,6 @@ dependencies {
     //Retrofit dependency Injection
     def retrofitVersion = "2.5.0"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-
-    //Co-routines ViewModel dependency Injection
-    def coroutines_ViewModel_version = "2.2.0-alpha02"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutines_ViewModel_version"
 
     // Paging dependency Injection
     def paggingVersion = "1.0.1"

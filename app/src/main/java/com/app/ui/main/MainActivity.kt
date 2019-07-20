@@ -25,6 +25,10 @@ class MainActivity : DaggerAppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        /*
+         * Initialize the ViewModel
+         * */
+
         mainViewModel = ViewModelProviders.of(this,providerFactory).get(MainViewModel::class.java)
 
         observeLiveData()
@@ -32,8 +36,12 @@ class MainActivity : DaggerAppCompatActivity()
 
     }
 
-    private fun observeLiveData() {
-        //observe live data emitted by view model
+    private fun observeLiveData()
+    {
+        /*
+         * When a new page is available, we call submitList() method
+         * of the PagedListAdapter class
+         * */
 
         mainViewModel.getPosts().observe(this, Observer {
             Log.e(TAG, "loadImageData Success: "+it.toString())
@@ -48,6 +56,9 @@ class MainActivity : DaggerAppCompatActivity()
     }
 
     private fun initializeList() {
+        /*
+         * Setup the adapter class for the RecyclerView
+         * */
         image_recylv.layoutManager = GridLayoutManager(this, 2)
         image_recylv.adapter = mainAdapter
     }

@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
     {
         val config = PagedList.Config.Builder()
             .setPageSize(20)
-            .setEnablePlaceholders(false)
+            .setEnablePlaceholders(true)
             .build()
         postsLiveData = initializedPagedListBuilder(config).build()
     }

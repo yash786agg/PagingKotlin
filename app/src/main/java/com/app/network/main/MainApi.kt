@@ -11,6 +11,6 @@ interface MainApi
     @GET("rest/")
     fun fetchImageDataAsync(@Query("method") method: String, @Query("api_key") apiKey: String,
                             @Query("tags") tags: String, @Query("page") page: Int,
-                            @Query("per_page") per_page: Long, @Query("format") format: String,
+                            @Query("per_page") per_page: Int, @Query("format") format: String,
                             @Query("nojsoncallback") nojsoncallback: Long): Deferred<Response<MainModel>>
 }

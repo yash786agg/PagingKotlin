@@ -17,6 +17,7 @@
                 style="@style/mainAdapterImageView"
                 app:photoItemImage="@{dataManager}"
                 fresco:placeholderImage="@drawable/place_holder"
+                app:placeholderImage="@drawable/place_holder"
                 fresco:placeholderImageScaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>

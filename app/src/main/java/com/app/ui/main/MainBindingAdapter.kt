@@ -45,6 +45,7 @@ class MainBindingAdapter(fresco: PipelineDraweeControllerBuilder,imageBindingApi
                     when
                     {
                         response.isSuccessful -> {
+                            Log.e(TAG, "MainBindingAdapter respons esize: ${response.body()!!.sizes.size.size}")
                             Log.e(TAG, "MainBindingAdapter response: ${response.body()!!.sizes.size[1].source}")
 
                             val imageUrl = response.body()!!.sizes.size[1].source
@@ -54,7 +55,6 @@ class MainBindingAdapter(fresco: PipelineDraweeControllerBuilder,imageBindingApi
                         }
                     }
                 }
-
             }
             catch (exception : Exception)
             {

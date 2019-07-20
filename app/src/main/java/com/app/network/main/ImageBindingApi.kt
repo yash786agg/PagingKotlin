@@ -12,5 +12,4 @@ interface ImageBindingApi {
     fun fetchSingleImageAsync(@Query("method") method: String, @Query("api_key") apiKey: String,
                             @Query("photo_id") tags: String,@Query("format") format: String,
                             @Query("nojsoncallback") nojsoncallback: Long): Deferred<Response<PhotoSizes>>
-
 }

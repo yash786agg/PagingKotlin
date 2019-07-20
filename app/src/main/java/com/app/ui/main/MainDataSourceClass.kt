@@ -40,10 +40,10 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                         val items = listing?.photo
                         Log.e(TAG, "loadInitial redditPostsitial: "+items!!)
                         Log.e(TAG, "loadInitial redditPostsitial size: "+items.size)
-                        callback.onResult(items ?: listOf(),null,2)
+                        //callback.onResult(items,null,2)
+                        callback.onResult(items,0,perPage,null,2)
                     }
                 }
-
             }
             catch (exception : Exception)
             {
