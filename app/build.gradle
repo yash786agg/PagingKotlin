@@ -22,12 +22,12 @@ android {
         debug
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"your_api_key\""
+            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
         }
         release
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"your_api_key\""
+            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

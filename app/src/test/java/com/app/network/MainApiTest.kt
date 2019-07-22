@@ -80,11 +80,10 @@ class MainApiTest
             assertTrue(viewModel.getData().value.isNullOrEmpty())
             assertTrue(imgsLiveData.value.isNullOrEmpty())
         }
-
     }
 
     @Test
-    fun `search photos by by kitten and fail`() {
+    fun `search photos by kitten and fail`() {
         val response = Response.success(photoListError)
         runBlocking {
             `when`(mainApi!!.fetchImageDataAsync(anyString(), anyString(), anyString(),
