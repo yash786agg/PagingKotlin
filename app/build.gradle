@@ -22,12 +22,12 @@ android {
         debug
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
+            buildConfigField "String", 'API_Key', "\"your_api_key\""
         }
         release
         {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
-            buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
+            buildConfigField "String", 'API_Key', "\"your_api_key\""
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -46,22 +46,28 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // AndroidX support design
+    // AndroidX constraintlayout dependency
+    def constraintlayout_version = "1.1.3"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+
+    // AndroidX appcompat dependency
+    def appcompat_version = "1.0.2"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+
+    // AndroidX material design
     def material_version = "1.0.0"
     implementation "com.google.android.material:material:$material_version"
 
-    //Dagger2 core dependencies
+    //Dagger2 core dependencies Injection
     def dagger_version = "2.22.1"
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    // Dagger Android dependencies
+    // Dagger Android dependencies Injection
     def dagger_android_version = "2.22.1"
     implementation "com.google.dagger:dagger-android:$dagger_android_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_android_version" // if you use the support libraries
@@ -89,4 +95,12 @@ dependencies {
     // Paging dependency Injection
     def paggingVersion = "1.0.1"
     implementation "android.arch.paging:runtime:$paggingVersion"
+
+    // Junit dependency Injection
+    def junit_version = "4.12"
+    testImplementation "junit:junit:$junit_version"
+
+    // MOCKITO dependency Injection
+    def mockito_version = "2.19.0"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
 }

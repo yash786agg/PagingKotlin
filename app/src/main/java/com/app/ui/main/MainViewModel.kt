@@ -16,7 +16,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(app)
 {
     // FOR DATA ---
-    private var imgsLiveData : LiveData<PagedList<PhotoListModel>>
+    var imgsLiveData : LiveData<PagedList<PhotoListModel>>
     val data = MutableLiveData<MainDataSourceClass>()
 
     // OBSERVABLES ---

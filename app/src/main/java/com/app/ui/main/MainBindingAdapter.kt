@@ -1,6 +1,7 @@
 package com.app.ui.main
 
 import android.net.Uri
+import android.text.TextUtils
 import androidx.databinding.BindingAdapter
 import com.app.galleryimage.BuildConfig
 import com.app.model.main.PhotoListModel
@@ -41,10 +42,12 @@ class MainBindingAdapter(fresco: PipelineDraweeControllerBuilder,imageBindingApi
                         response.isSuccessful -> {
                             if(response.body() != null)
                             {
-                                val imageUrl = response.body()!!.sizes.size[1].source
-                                val draweeController = fresco!!.setImageRequest(ImageRequest.fromUri(Uri.parse(imageUrl)))
-                                    .setOldController(imageView.controller).build()
-                                imageView.controller = draweeController
+                                if(!TextUtils.isEmpty(response.body()!!.sizes.size[1].source)) {
+                                    val imageUrl = response.body()!!.sizes.size[1].source
+                                    val draweeController = fresco!!.setImageRequest(ImageRequest.fromUri(Uri.parse(imageUrl)))
+                                        .setOldController(imageView.controller).build()
+                                    imageView.controller = draweeController
+                                }
                             }
                         }
                     }

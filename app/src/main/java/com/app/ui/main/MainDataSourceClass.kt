@@ -35,12 +35,14 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                     {
                         networkState.postValue(NetworkState.Success())
 
-                        val items = response.body()?.photos?.photo
+                        if(response.body() != null) {
+                            val items = response.body()?.photos?.photo
 
-                        if(items != null)
-                            callback.onResult(items,0,perPage,null,2)
-                        else
-                            networkState.postValue(NetworkState.Error(response.errorBody().toString()))
+                            if(items != null)
+                                callback.onResult(items,0,perPage,null,2)
+                            else
+                                networkState.postValue(NetworkState.Error(response.errorBody().toString()))
+                        }
                     }
                 }
             }
@@ -66,17 +68,18 @@ class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedD
                         networkState.postValue(NetworkState.Success())
                         val nextKey = (if(params.key == response.body()!!.photos.pages) null else params.key + 1)
 
-                        val items = response.body()?.photos?.photo
+                        if(response.body() != null) {
+                            val items = response.body()?.photos?.photo
 
-                        if(items != null)
-                            callback.onResult(items, nextKey)
-                        else
-                            networkState.postValue(NetworkState.Error(response.errorBody().toString()))
+                            if(items != null)
+                                callback.onResult(items, nextKey)
+                            else
+                                networkState.postValue(NetworkState.Error(response.errorBody().toString()))
+                        }
                     }
                 }
 
-            }
-            catch (exception : Exception){
+            }catch (exception : Exception) {
                 networkState.postValue(NetworkState.Error(exception.message.toString()))
             }
         }
