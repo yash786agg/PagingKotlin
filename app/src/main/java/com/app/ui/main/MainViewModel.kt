@@ -1,10 +1,9 @@
 package com.app.ui.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -13,11 +12,12 @@ import com.app.network.main.MainApi
 import com.app.util.NetworkState
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(app)
+class MainViewModel @Inject constructor(mainApi: MainApi) : ViewModel()
 {
     // FOR DATA ---
     var imgsLiveData : LiveData<PagedList<PhotoListModel>>
     val data = MutableLiveData<MainDataSourceClass>()
+    private var mainApi: MainApi? = null
 
     // OBSERVABLES ---
     val networkState: LiveData<NetworkState<String>>? = switchMap(data) { it.getNetworkState() }
@@ -25,17 +25,12 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
     // UTILS ---
     init
     {
+        this.mainApi = mainApi
+
         val config = PagedList.Config.Builder().setPageSize(20)
             .setEnablePlaceholders(true).build()
 
         imgsLiveData = initializedPagedListBuilder(config).build()
-    }
-
-    private lateinit var mainApi: MainApi
-
-    @Inject
-    fun MainViewModel(mainApi: MainApi) {
-        this.mainApi = mainApi
     }
 
     /**
@@ -48,7 +43,7 @@ class MainViewModel @Inject constructor(app : Application) : AndroidViewModel(ap
 
         val dataSourceFactory = object : DataSource.Factory<Int, PhotoListModel>() {
             override fun create(): MainDataSourceClass {
-                val source = MainDataSourceClass(mainApi)
+                val source = MainDataSourceClass(mainApi!!)
                 data.postValue(source)
                 return source
             }

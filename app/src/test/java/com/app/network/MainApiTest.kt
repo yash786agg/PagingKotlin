@@ -1,6 +1,5 @@
 package com.app.network
 
-import android.app.Application
 import com.app.model.main.MainModel
 import com.app.model.main.PhotoListModel
 import com.app.model.main.PhotosModel
@@ -21,9 +20,6 @@ import retrofit2.Response
 class MainApiTest
 {
     @Mock
-    private lateinit var context: Application
-
-    @Mock
     private var mainApi: MainApi? = null
 
     private lateinit var photoListSuccess: MainModel
@@ -37,7 +33,7 @@ class MainApiTest
     {
         MockitoAnnotations.initMocks(this)
 
-        viewModel = MainViewModel(context)
+        viewModel = MainViewModel(mainApi!!)
 
         photoListSuccess = MainModel(
             PhotosModel
