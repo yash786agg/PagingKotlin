@@ -15,7 +15,7 @@ import com.app.util.NetworkState
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class MainDataSourceClass constructor(private var mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
+class MainDataSourceClass constructor(private val mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
 {
     // FOR DATA ---
     private val networkState = MutableLiveData<NetworkState<String>>()

@@ -17,23 +17,16 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainBindingAdapter(fresco: PipelineDraweeControllerBuilder,imageBindingApi: ImageBindingApi)
+class MainBindingAdapter(private val fresco: PipelineDraweeControllerBuilder,
+                         private val imageBindingApi: ImageBindingApi)
 {
-    private var fresco : PipelineDraweeControllerBuilder? = null
-    private var imageBindingApi: ImageBindingApi? = null
-
-    init {
-        this.fresco = fresco
-        this.imageBindingApi = imageBindingApi
-    }
-
     @BindingAdapter("photoItemImage")
-    fun newsItemImage(imageView: SimpleDraweeView, photoList: PhotoListModel)
+    fun photoItemImage(imageView: SimpleDraweeView, photoList: PhotoListModel)
     {
         GlobalScope.launch {
             try
             {
-                val response = imageBindingApi!!.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,photoList.id ,format, noJsonCallback).await()
+                val response = imageBindingApi.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,photoList.id ,format, noJsonCallback).await()
 
                 withContext(Dispatchers.Main) {
                     // Perform operations on the main thread
@@ -44,7 +37,7 @@ class MainBindingAdapter(fresco: PipelineDraweeControllerBuilder,imageBindingApi
                             {
                                 if(!TextUtils.isEmpty(response.body()!!.sizes.size[1].source)) {
                                     val imageUrl = response.body()!!.sizes.size[1].source
-                                    val draweeController = fresco!!.setImageRequest(ImageRequest.fromUri(Uri.parse(imageUrl)))
+                                    val draweeController = fresco.setImageRequest(ImageRequest.fromUri(Uri.parse(imageUrl)))
                                         .setOldController(imageView.controller).build()
                                     imageView.controller = draweeController
                                 }
