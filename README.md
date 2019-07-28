@@ -4,6 +4,15 @@
 
 The Paging Library helps you in the loading of heavy-data with endless scrolling or infinite scrolling. You can load and display small chunks of data at a time which can eventually reduce the usage of network bandwidth and system resources.
 
+# Features:
+* __MVVM Android Architecture__
+* __Dagger2 with Multi Binding Support__
+* __Kotlin-Coroutines for api request__
+* __Android JetPack Paging for providing Pagination support__
+* __Fresco for Image Management__
+* __Unit Testing__
+* __Any Many More__
+
 # Demo
 ![PagingKotlin](screenshots/GalleryImage.gif)
 
@@ -69,8 +78,14 @@ override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Dat
 
 ```
 
+I had enabled the **Proguard** along with minifyEnabled and shrinkResources True in released version along with basic support for **Android App Bundle**. In the result of that, we can reduce the APK size along with we can also provide an extra security layer to our code from decompiling or extracting of the code from APK. For more info refer the Image below.
+
+![Apk Analyser](screenshots/Apk_Analyser.png)
+
 # Prerequisites
-* __Android Studio 3.0__
+* __Android Studio 3.4__
+* __Gradle version 3.4.2__
+* __Kotlin version 1.3.41__
 * __Android Device with USB Debugging Enabled__
 
 # Built With
