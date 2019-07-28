@@ -14,8 +14,9 @@ import com.app.util.Constants.Companion.perPage
 import com.app.util.NetworkState
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainDataSourceClass constructor(private val mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
+class MainDataSourceClass @Inject constructor(private val mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
 {
     // FOR DATA ---
     private val networkState = MutableLiveData<NetworkState<String>>()

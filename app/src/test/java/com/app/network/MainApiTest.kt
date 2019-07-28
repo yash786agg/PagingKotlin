@@ -4,6 +4,7 @@ import com.app.model.main.MainModel
 import com.app.model.main.PhotoListModel
 import com.app.model.main.PhotosModel
 import com.app.network.main.MainApi
+import com.app.ui.main.MainDataSourceClass
 import com.app.ui.main.MainViewModel
 import kotlinx.coroutines.*
 import org.junit.Assert.*
@@ -22,6 +23,9 @@ class MainApiTest
     @Mock
     private var mainApi: MainApi? = null
 
+    @Mock
+    private var mainDataSourceClass: MainDataSourceClass? = null
+
     private lateinit var photoListSuccess: MainModel
 
     private lateinit var photoListError: MainModel
@@ -33,7 +37,7 @@ class MainApiTest
     {
         MockitoAnnotations.initMocks(this)
 
-        viewModel = MainViewModel(mainApi!!)
+        viewModel = MainViewModel(mainDataSourceClass!!)
 
         photoListSuccess = MainModel(
             PhotosModel

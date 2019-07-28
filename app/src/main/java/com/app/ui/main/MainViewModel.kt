@@ -8,11 +8,10 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.app.model.main.PhotoListModel
-import com.app.network.main.MainApi
 import com.app.util.NetworkState
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val mainApi: MainApi) : ViewModel()
+class MainViewModel @Inject constructor(private val mainDataSourceClass : MainDataSourceClass) : ViewModel()
 {
     // FOR DATA ---
     var imgsLiveData : LiveData<PagedList<PhotoListModel>>
@@ -40,9 +39,8 @@ class MainViewModel @Inject constructor(private val mainApi: MainApi) : ViewMode
 
         val dataSourceFactory = object : DataSource.Factory<Int, PhotoListModel>() {
             override fun create(): MainDataSourceClass {
-                val source = MainDataSourceClass(mainApi)
-                data.postValue(source)
-                return source
+                data.postValue(mainDataSourceClass)
+                return mainDataSourceClass
             }
         }
         return LivePagedListBuilder(dataSourceFactory, config)

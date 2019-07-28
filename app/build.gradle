@@ -29,8 +29,24 @@ android {
             buildConfigField "String", 'BASE_URL', "\"https://api.flickr.com/services/\""
             buildConfigField "String", 'API_Key', "\"9a95c68a9c6ec61104cd3967dcbb8bd3\""
 
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //Android app bundle settings for density,abi and Language.
+    bundle {
+        density {
+            // Different APKs are generated for devices with different screen densities; true by default.
+            enableSplit true
+        }
+        abi {
+            // Different APKs are generated for devices with different CPU architectures; true by default.
+            enableSplit true
+        }
+        language {
+            enableSplit false
         }
     }
 
@@ -78,7 +94,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     //Fresco dependency
-    def fresco_version = '1.11.0'
+    def fresco_version = '2.0.0'
     implementation "com.facebook.fresco:fresco:$fresco_version"
 
     //Co-routines dependency Injection
