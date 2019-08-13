@@ -78,6 +78,9 @@ override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Data
 override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataModel>) {}
 
 ```
+I had enabled the **Proguard** along with minifyEnabled and shrinkResources True in released version along with basic support for **Android App Bundle**. In the result of that, we can reduce the APK size along with we can also provide an extra security layer to our code from decompiling or extracting of the code from APK. For more info refer the Image below.
+
+![Apk Analyser](screenshots/Apk_Analyser.png)
 
 # Prerequisites
 * __Android Studio 3.4__
@@ -91,9 +94,3 @@ override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Dat
 * __[Android JetPack Paging library](https://developer.android.com/topic/libraries/architecture/paging)__ - Android JetPack Paging library
 * __[Paging Video for Reference](https://www.youtube.com/watch?v=BE5bsyGGLf4)__ Paging Video for Reference
 * __[Gradle](https://gradle.org)__ - Build tool for Android Studio
-
-Thanks for reading this repo. Be sure to click ★ below to recommend this repo if you found it helpful. It means a lot to me.
-
-For more about programming, follow me on [Medium](https://medium.com/@yash786agg)
-
-Also, Let’s become friends on [Linkedin](http://bit.ly/24t4EVI)
