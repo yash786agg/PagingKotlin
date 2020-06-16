@@ -1,18 +1,18 @@
 package com.app.galleryimage
 
+import android.app.Application
 import androidx.databinding.DataBindingUtil
 import com.app.di.component.DaggerAppComponent
 import com.app.di.module.BindingModule
 import com.facebook.drawee.backends.pipeline.Fresco
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.hilt.android.HiltAndroidApp
 
-class BaseApplication : DaggerApplication()
+@HiltAndroidApp
+class BaseApplication : Application()
 {
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication>
-    {
+    override fun onCreate() {
+        super.onCreate()
         Fresco.initialize(this)
-
         val bindingComponent = DaggerAppComponent.builder()
             .bindingModule(BindingModule)
             .application(this)
@@ -20,8 +20,6 @@ class BaseApplication : DaggerApplication()
             .build()
 
         DataBindingUtil.setDefaultComponent(bindingComponent)
-
-        return bindingComponent
     }
 
     override fun onLowMemory()

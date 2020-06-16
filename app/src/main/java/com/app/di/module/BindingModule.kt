@@ -6,9 +6,12 @@ import com.app.ui.main.MainBindingAdapter
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
 
 @Module
+@InstallIn(ApplicationComponent::class)
 object BindingModule
 {
     @Provides

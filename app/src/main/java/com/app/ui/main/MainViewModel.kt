@@ -1,5 +1,6 @@
 package com.app.ui.main
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.switchMap
@@ -11,7 +12,7 @@ import com.app.model.main.PhotoListModel
 import com.app.util.NetworkState
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val mainDataSourceClass : MainDataSourceClass) : ViewModel()
+class MainViewModel @ViewModelInject constructor(private val mainDataSourceClass : MainDataSourceClass) : ViewModel()
 {
     // FOR DATA ---
     var imgsLiveData : LiveData<PagedList<PhotoListModel>>
