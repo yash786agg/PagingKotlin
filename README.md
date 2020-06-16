@@ -4,6 +4,16 @@
 
 The Paging Library helps you in the loading of heavy-data with endless scrolling or infinite scrolling. You can load and display small chunks of data at a time which can eventually reduce the usage of network bandwidth and system resources.
 
+# Features:
+* __MVVM Android Architecture__
+* __Dagger2 with Multi Binding Support__
+* __Kotlin-Coroutines for api request__
+* __Android JetPack Paging for providing Pagination support__
+* __Fresco for Image Management__
+* __Unit Testing__
+* __Support Device Rotation without loosing the data__
+* __Any Many More__
+
 # Demo
 ![PagingKotlin](screenshots/GalleryImage.gif)
 
@@ -70,7 +80,9 @@ override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Dat
 ```
 
 # Prerequisites
-* __Android Studio 3.0__
+* __Android Studio 3.4__
+* __Gradle version 3.4.2__
+* __Kotlin version 1.3.41__
 * __Android Device with USB Debugging Enabled__
 
 # Built With
@@ -79,3 +91,10 @@ override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Dat
 * __[Android JetPack Paging library](https://developer.android.com/topic/libraries/architecture/paging)__ - Android JetPack Paging library
 * __[Paging Video for Reference](https://www.youtube.com/watch?v=BE5bsyGGLf4)__ Paging Video for Reference
 * __[Gradle](https://gradle.org)__ - Build tool for Android Studio
+
+Thanks for reading this repo. Be sure to click ★ below to recommend this repo if you found it helpful. It means a lot to me.
+
+For more about programming, follow me on [Medium](https://medium.com/@yash786agg)
+
+Also, Let’s become friends on [Linkedin](http://bit.ly/24t4EVI)
+
