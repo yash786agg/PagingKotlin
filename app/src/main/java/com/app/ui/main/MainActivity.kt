@@ -2,36 +2,31 @@ package com.app.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.app.galleryimage.R
-import com.app.viewmodels.ViewModelProviderFactory
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.util.Constants.Companion.nullData
 import com.app.util.NetworkState
 import com.app.util.UiHelper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity()
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity()
 {
     // FOR DATA ---
     @Inject lateinit var uiHelper: UiHelper
-    @Inject lateinit var providerFactory: ViewModelProviderFactory
-    private lateinit var mainViewModel : MainViewModel
+    private val mainViewModel : MainViewModel by viewModels()
     private val mainAdapter = MainAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        /*
-         * Initialize the ViewModel
-         * */
-
-        mainViewModel = ViewModelProviders.of(this,providerFactory).get(MainViewModel::class.java)
 
         initRecyclerView()
 

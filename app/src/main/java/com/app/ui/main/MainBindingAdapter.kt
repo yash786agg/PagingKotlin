@@ -16,9 +16,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainBindingAdapter(private val fresco: PipelineDraweeControllerBuilder,
-                         private val imageBindingApi: ImageBindingApi)
+class MainBindingAdapter @Inject constructor(private val fresco: PipelineDraweeControllerBuilder,
+                                             private val imageBindingApi: ImageBindingApi)
 {
     @BindingAdapter("photoItemImage")
     fun photoItemImage(imageView: SimpleDraweeView, photoList: PhotoListModel)
