@@ -8,7 +8,6 @@ You can load and display small chunks of data at a time which can eventually red
 <p align="center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
-  <a href="https://medium.com/@yash786agg/dagger-hilt-an-introduction-and-migrating-from-dagger-android-520bf491c6b6"><img alt="Medium" src="screenshots/medium.png"/></a>
 </p>
 
 
