@@ -31,7 +31,6 @@ Go to the [Demo APK](https://github.com/yash786agg/PagingKotlin/tree/master/demo
 - [Paging](https://developer.android.com/topic/libraries/architecture/paging) - A Paging Library helps you load and display small chunks of data at a time.   
 - [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
 
-##Demo
 ![PagingKotlin](screenshots/GalleryImage.gif)
 
 ## Architecture
