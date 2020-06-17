@@ -1,96 +1,50 @@
-# PagingKotlin
+<h1 align="center">PagingKotlin</h1>
 
-#### Pagination
+<p align="center">  
+The Paging Library helps you in the loading of heavy-data with endless scrolling or infinite scrolling.<br>
+You can load and display small chunks of data at a time which can eventually reduce the usage of network bandwidth and system resources.
+</p>
 
-The Paging Library helps you in the loading of heavy-data with endless scrolling or infinite scrolling. You can load and display small chunks of data at a time which can eventually reduce the usage of network bandwidth and system resources.
+<p align="center">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
+  <a href="https://medium.com/@yash786agg/dagger-hilt-an-introduction-and-migrating-from-dagger-android-520bf491c6b6"><img alt="Medium" src="screenshots/medium.png"/></a>
+</p>
 
-# Features:
-* __MVVM Android Architecture__
-* __Dagger2 with Multi Binding Support__
-* __Kotlin-Coroutines for api request__
-* __Android JetPack Paging for providing Pagination support__
-* __Fresco for Image Management__
-* __Unit Testing__
-* __Support Device Rotation without loosing the data__
-* __Any Many More__
 
-# Demo
+## Download
+Go to the [Demo APK](https://github.com/yash786agg/PagingKotlin/tree/master/demo_apks) to download the latest APK.
+
+## Tech stack & Open-source libraries
+- Minimum SDK level 21
+- [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous.
+- [Dagger-Hilt](https://developer.android.com/training/dependency-injection/hilt-android#kotlin) for dependency injection.
+  - Hilt Data Binding - Implementing a binding adapter using the Android Data Binding Library.
+- JetPack
+  - LiveData - notify domain layer data to views.
+  - Lifecycle - dispose of observing data when lifecycle state changes.
+  - ViewModel - UI related data holder, lifecycle aware.
+- Architecture
+  - MVVM Architecture (View - DataBinding - ViewModel - Model)
+- [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - construct the REST APIs and paging network data.
+- [Gson](https://github.com/google/gson) - A JSON serialization/deserialization library for Kotlin and Java.
+- [Fresco](https://frescolib.org/) - A Image loading library.
+- [Paging](https://developer.android.com/topic/libraries/architecture/paging) - A Paging Library helps you load and display small chunks of data at a time.   
+- [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
+
+##Demo
 ![PagingKotlin](screenshots/GalleryImage.gif)
 
-Paging library Installation 
+## Architecture
+The application is based on MVVM architecture and a repository pattern.
 
-#### Android Gradle
-```groovy
-// Add Paging dependency
-dependencies {
-      implementation 'android.arch.paging:runtime:1.0.1'
-}
-```
+![architecture](screenshots/mvvm.png)
 
-#### PagedList
+## Open API
 
-The Paging Library's key component is the PagedList object which loads chunks of your app's data or pages. If any loaded data changes, a new instance of PagedList is emitted to the observable data holder from a LiveData
+PagingKotlin using the [FlickrAPI](https://www.flickr.com/services/api/) for constructing restful API.<br>
+FlickrAPI provides a restful API for image and video service, as well as an online community.
 
-**setEnablePlaceholders(boolean enablePlaceholders)** — Enabling placeholders mean there is a placeholder that is visible to the user till the data is fully loaded. So for instance, if we have 20 items that are needed to be loaded and each item contains an image when we scroll through the screen, we can see placeholders instead of the image since it is not fully loaded. 
-
-**setPageSize(int pageSize)** — The number of items to load in the PagedList.
-
-```groovy
- init
- {
-   val config = PagedList.Config.Builder().setPageSize(20).setEnablePlaceholders(true).build()
-   imgsLiveData = initializedPagedListBuilder(config).build()
- }
-```
-
-#### DataSource.Factory
-
-You can load the data into PagedList objects by creating a concrete subclass of DataSource.Factory. The following code snippet shows how to generate new instances of the custom data source defined in the preceding code snippet
-
-```groovy
-private fun initializedPagedListBuilder(config: PagedList.Config): LivePagedListBuilder<Int, DataModel> {
-
-        val dataSourceFactory = object : DataSource.Factory<Int, DataModel>() {
-            override fun create(): DataSourceClass {
-                val source = DataSourceClass(api)
-                data.postValue(source)
-                return source
-            }
-        }
-        return LivePagedListBuilder(dataSourceFactory, config)
-    }
-```
-
-#### DataSource
-This is the base class for data loading, used in list paging.DataSource can be implemented in 3 ways
-* PageKeyedDataSource
-* ItemKeyedDataSource
-* PositionalDataSource
-
-In this scenario, we would be using a PageKeyedDataSource. The following code shows how we can create PageKeyedDataSource for our DataSource class.As we are using  **Int** to load data based on the number of pages in the DataSource
-
-```groovy
-
-override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, DataModel>) {}
-
-override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, DataModel>) {}
-
-override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DataModel>) {}
-
-```
-
-# Prerequisites
-* __Android Studio 3.4__
-* __Gradle version 3.4.2__
-* __Kotlin version 1.3.41__
-* __Android Device with USB Debugging Enabled__
-
-# Built With
-
-* __[Android Studio](https://developer.android.com/studio/index.html)__ - The Official IDE for Android
-* __[Android JetPack Paging library](https://developer.android.com/topic/libraries/architecture/paging)__ - Android JetPack Paging library
-* __[Paging Video for Reference](https://www.youtube.com/watch?v=BE5bsyGGLf4)__ Paging Video for Reference
-* __[Gradle](https://gradle.org)__ - Build tool for Android Studio
 
 Thanks for reading this repo. Be sure to click ★ below to recommend this repo if you found it helpful. It means a lot to me.
 
@@ -98,3 +52,19 @@ For more about programming, follow me on [Medium](https://medium.com/@yash786agg
 
 Also, Let’s become friends on [Linkedin](http://bit.ly/24t4EVI)
 
+# License
+```xml
+Designed and developed by yash786agg (Yash Agarwal)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
