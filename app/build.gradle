@@ -119,8 +119,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     // Paging dependency Injection
-    def paggingVersion = "1.0.1"
-    implementation "android.arch.paging:runtime:$paggingVersion"
+    /*def paggingVersion = "1.0.1"
+    implementation "android.arch.paging:runtime:$paggingVersion"*/
+    def paging_version = "3.0.0-alpha01"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
     // Junit dependency Injection
     def junit_version = "4.13"

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.app.galleryimage.R
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +13,10 @@ import com.app.util.Constants.Companion.nullData
 import com.app.util.NetworkState
 import com.app.util.UiHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,6 +26,7 @@ class MainActivity : AppCompatActivity()
     @Inject lateinit var uiHelper: UiHelper
     private val mainViewModel : MainViewModel by viewModels()
     private val mainAdapter = MainAdapter()
+    private var coroutineJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -43,15 +48,23 @@ class MainActivity : AppCompatActivity()
          * of the PagedListAdapter class
          * */
 
-        mainViewModel.getData().observe(this, Observer {
+        /*mainViewModel.getData().observe(this, Observer {
             if(it != null)
                 mainAdapter.submitList(it)
-        })
-
+        })*/
+        coroutineJob?.cancel()
+        coroutineJob = lifecycleScope.launch {
+            @OptIn(ExperimentalCoroutinesApi::class)
+            mainViewModel.imgsLiveData.collectLatest {
+                it.let {
+                    mainAdapter.submitData(it)
+                }
+            }
+        }
         /*
          * Progress Updater
          * */
-        mainViewModel.networkState!!.observe(this, Observer {
+        mainViewModel.networkState?.observe(this, Observer {
 
             if(it != null)
             {

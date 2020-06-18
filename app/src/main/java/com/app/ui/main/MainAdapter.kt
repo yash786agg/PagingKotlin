@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.galleryimage.R
 import com.app.galleryimage.databinding.MainAdapterBinding
 import com.app.model.main.PhotoListModel
 import com.app.util.DiffUtilCallBack
 
-class MainAdapter : PagedListAdapter<PhotoListModel, MainAdapter.MyViewHolder>(DiffUtilCallBack())
+class MainAdapter : PagingDataAdapter<PhotoListModel, MainAdapter.MyViewHolder>(DiffUtilCallBack())
 {
     // OVERRIDE ---
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

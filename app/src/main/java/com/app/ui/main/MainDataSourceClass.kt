@@ -1,8 +1,10 @@
 package com.app.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource.LoadResult.Page
+import androidx.paging.PagingSource
 import com.app.galleryimage.BuildConfig
 import com.app.model.main.PhotoListModel
 import com.app.network.main.MainApi
@@ -12,11 +14,46 @@ import com.app.util.Constants.Companion.kittenSearch
 import com.app.util.Constants.Companion.noJsonCallback
 import com.app.util.Constants.Companion.perPage
 import com.app.util.NetworkState
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainDataSourceClass @Inject constructor(private val mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
+class MainDataSourceClass @Inject constructor(private val mainApi: MainApi): PagingSource<Int, PhotoListModel>() {
+
+    // FOR DATA ---
+    private val networkState = MutableLiveData<NetworkState<String>>()
+    private val initialPageIndex: Int = 1
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PhotoListModel> {
+        val position = params.key ?: initialPageIndex
+        Log.e("MainActivity","MainDataSourceClass load position: $position")
+
+        networkState.postValue(NetworkState.Loading())
+        return try {
+            val response = mainApi.fetchImageDataAsync(flickrPhotosSearch, BuildConfig.API_Key,kittenSearch, position,
+                perPage, format, noJsonCallback).await()
+
+            Log.e("MainActivity","MainDataSourceClass response: ${response.isSuccessful}")
+
+            networkState.postValue(NetworkState.Success())
+
+            val items = response.body()?.photos
+
+            Log.e("MainActivity","MainDataSourceClass response photo size: ${items?.photo?.size}")
+            Log.e("MainActivity","MainDataSourceClass response position: ${position}")
+            //Log.e("MainActivity","MainDataSourceClass response nextKey: ${params.key?.plus(1)}")
+            Page(
+                data = items?.photo!!,
+                prevKey = if (position == initialPageIndex) null else position - 1,
+                nextKey = if (items.photo.isEmpty()) null else position + 1
+            )
+        } catch (exception : Exception) {
+            networkState.postValue(NetworkState.Error(exception.toString()))
+            LoadResult.Error(exception)
+        }
+    }
+
+    fun getNetworkState(): LiveData<NetworkState<String>> = networkState
+}
+/*class MainDataSourceClass @Inject constructor(private val mainApi: MainApi) : PageKeyedDataSource<Int, PhotoListModel>()
 {
     // FOR DATA ---
     private val networkState = MutableLiveData<NetworkState<String>>()
@@ -89,4 +126,4 @@ class MainDataSourceClass @Inject constructor(private val mainApi: MainApi) : Pa
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PhotoListModel>) {}
 
     fun getNetworkState(): LiveData<NetworkState<String>> = networkState
-}
+}*/

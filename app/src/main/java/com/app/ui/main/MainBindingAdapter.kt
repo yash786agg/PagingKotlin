@@ -27,7 +27,7 @@ class MainBindingAdapter @Inject constructor(private val fresco: PipelineDraweeC
         GlobalScope.launch {
             try
             {
-                val response = imageBindingApi.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,photoList.id ,format, noJsonCallback).await()
+                val response = imageBindingApi.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,photoList.id!! ,format, noJsonCallback).await()
 
                 withContext(Dispatchers.Main) {
                     // Perform operations on the main thread
