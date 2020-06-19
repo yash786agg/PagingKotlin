@@ -14,7 +14,7 @@ You can load and display small chunks of data at a time which can eventually red
 ## Download
 Go to the [Demo APK](https://github.com/yash786agg/PagingKotlin/tree/master/demo_apks) to download the latest APK.
 
-<img src="/screenshots/GalleryImage.gif" align="right" width="32%"/>
+<img src="/screenshots/PagingPreview.gif" align="right" width="32%"/>
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21
