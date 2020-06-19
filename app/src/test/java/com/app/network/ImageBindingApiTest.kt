@@ -50,15 +50,15 @@ class ImageBindingApiTest
     {
         val response = Response.success(photoSizesSuccess)
         runBlocking {
-            `when`(imageBindingApi!!.fetchSingleImageAsync(anyString(), anyString(),anyString(), anyString(), anyLong()))
+            `when`(imageBindingApi?.fetchSingleImageAsync(anyString(), anyString(),anyString(), anyString(), anyLong()))
                 .thenReturn(async { response })
         }
 
-        assertEquals(4, response.body()!!.sizes.size.size)
-        assertEquals("Large Square", response.body()!!.sizes.size[1].label)
-        assertFalse(response.body()!!.sizes.size[0].source == "")
-        assertFalse(response.body()!!.sizes.size.size == 3)
-        assertTrue(response.body()!!.sizes.size[1].source == "https://live.staticflickr.com/65535/48340281827_5e2d715fc7_q.jpg")
+        assertEquals(4, response.body()?.sizes?.size?.size)
+        assertEquals("Large Square", response.body()?.sizes?.size?.get(1)?.label)
+        assertFalse(response.body()?.sizes?.size?.get(0)?.source == "")
+        assertFalse(response.body()?.sizes?.size?.size == 3)
+        assertTrue(response.body()?.sizes?.size?.get(1)?.source == "https://live.staticflickr.com/65535/48340281827_5e2d715fc7_q.jpg")
     }
 
     @Test(expected = Exception::class)
@@ -66,13 +66,13 @@ class ImageBindingApiTest
     {
         val response = Response.success(photoSizesError)
         runBlocking {
-            `when`(imageBindingApi!!.fetchSingleImageAsync(anyString(), anyString(),anyString(), anyString(), anyLong()))
+            `when`(imageBindingApi?.fetchSingleImageAsync(anyString(), anyString(),anyString(), anyString(), anyLong()))
                 .thenReturn(async { response })
         }
 
-        assertEquals(0, response.body()!!.sizes.size.size)
-        assertTrue(response.body()!!.sizes.size[0].source == "")
-        assertTrue(response.body()!!.sizes.size.isNullOrEmpty())
-        assertFalse(response.body()!!.sizes.size.isNotEmpty())
+        assertEquals(0, response.body()?.sizes?.size?.size)
+        assertTrue(response.body()?.sizes?.size?.get(0)?.source == "")
+        assertTrue(response.body()?.sizes?.size.isNullOrEmpty())
+        response.body()?.sizes?.size?.isNotEmpty()?.let { assertFalse(it) }
     }
 }

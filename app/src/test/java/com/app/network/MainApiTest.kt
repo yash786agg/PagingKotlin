@@ -4,8 +4,6 @@ import com.app.model.main.MainModel
 import com.app.model.main.PhotoListModel
 import com.app.model.main.PhotosModel
 import com.app.network.main.MainApi
-import com.app.ui.main.MainDataSourceClass
-import com.app.ui.main.MainViewModel
 import kotlinx.coroutines.*
 import org.junit.Assert.*
 import org.junit.Before
@@ -23,21 +21,14 @@ class MainApiTest
     @Mock
     private var mainApi: MainApi? = null
 
-    @Mock
-    private var mainDataSourceClass: MainDataSourceClass? = null
-
     private lateinit var photoListSuccess: MainModel
 
     private lateinit var photoListError: MainModel
-
-    private lateinit var viewModel: MainViewModel
 
     @Before
     fun setUp()
     {
         MockitoAnnotations.initMocks(this)
-
-        viewModel = MainViewModel(mainDataSourceClass!!)
 
         photoListSuccess = MainModel(
             PhotosModel
@@ -63,37 +54,31 @@ class MainApiTest
     fun `search photos by kitten and succeed`() {
         val response = Response.success(photoListSuccess)
         runBlocking {
-            `when`(mainApi!!.fetchImageDataAsync(anyString(), anyString(), anyString(),
+            `when`(mainApi?.fetchImageDataAsync(anyString(), anyString(), anyString(),
                 anyInt(), anyInt(), anyString(), anyLong())).thenReturn(async { response })
         }
 
-        assertEquals(10, response.body()!!.photos.photo.size)
-        assertEquals("Stray Cats of Kos, Greece.", response.body()!!.photos.photo[4].title)
-        assertEquals("48338729372",response.body()!!.photos.photo[5].id)
-        assertTrue(response.body()!!.photos.page == 1)
-        assertTrue(response.body()!!.photos.photo.size == 10)
-        assertFalse(response.body()!!.photos.perpage == 10)
-        assertFalse(response.body()!!.photos.pages == 21)
-
-        with(viewModel)
-        {
-            assertTrue(viewModel.getData().value.isNullOrEmpty())
-            assertTrue(imgsLiveData.value.isNullOrEmpty())
-        }
+        assertEquals(10, response.body()?.photos?.photo?.size)
+        assertEquals("Stray Cats of Kos, Greece.", response.body()?.photos?.photo?.get(4)?.title)
+        assertEquals("48338729372",response.body()?.photos?.photo?.get(5)?.id)
+        assertTrue(response.body()?.photos?.page == 1)
+        assertTrue(response.body()?.photos?.photo?.size == 10)
+        assertFalse(response.body()?.photos?.perpage == 10)
+        assertFalse(response.body()?.photos?.pages == 21)
     }
 
     @Test
     fun `search photos by kitten and fail`() {
         val response = Response.success(photoListError)
         runBlocking {
-            `when`(mainApi!!.fetchImageDataAsync(anyString(), anyString(), anyString(),
+            `when`(mainApi?.fetchImageDataAsync(anyString(), anyString(), anyString(),
                 anyInt(), anyInt(), anyString(), anyLong())).thenReturn(async { response })
         }
 
-        assertEquals(0, response.body()!!.photos.photo.size)
-        assertTrue(response.body()!!.photos.page == 0)
-        assertTrue(response.body()!!.photos.page == 0)
-        assertFalse(response.body()!!.photos.photo.isNotEmpty())
-        assertFalse(response.body()!!.photos.pages == 21)
+        assertEquals(0, response.body()?.photos?.photo?.size)
+        assertTrue(response.body()?.photos?.page == 0)
+        assertTrue(response.body()?.photos?.page == 0)
+        response.body()?.photos?.photo?.isNotEmpty()?.let { assertFalse(it) }
+        assertFalse(response.body()?.photos?.pages == 21)
     }
 }
