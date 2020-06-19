@@ -14,6 +14,8 @@ You can load and display small chunks of data at a time which can eventually red
 ## Download
 Go to the [Demo APK](https://github.com/yash786agg/PagingKotlin/tree/master/demo_apks) to download the latest APK.
 
+<img src="/screenshots/GalleryImage.gif" align="right" width="32%"/>
+
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21
 - [Kotlin](https://kotlinlang.org/) based + [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous.
@@ -28,10 +30,9 @@ Go to the [Demo APK](https://github.com/yash786agg/PagingKotlin/tree/master/demo
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - construct the REST APIs and paging network data.
 - [Gson](https://github.com/google/gson) - A JSON serialization/deserialization library for Kotlin and Java.
 - [Fresco](https://frescolib.org/) - A Image loading library.
-- [Paging](https://developer.android.com/topic/libraries/architecture/paging) - A Paging Library helps you load and display small chunks of data at a time.   
+- [Paging3.0](https://developer.android.com/topic/libraries/architecture/paging/v3-overview) - A Paging Library helps you load and display small chunks of data at a time.   
 - [Material-Components](https://github.com/material-components/material-components-android) - Material design components like ripple animation, cardView.
 
-![PagingKotlin](screenshots/GalleryImage.gif)
 
 ## Architecture
 The application is based on MVVM architecture and a repository pattern.
