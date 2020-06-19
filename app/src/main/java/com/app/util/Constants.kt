@@ -17,7 +17,5 @@ class Constants
         const val perPage : Int = 20
 
         const val noJsonCallback : Long = 1
-
-        const val nullData = "null"
     }
 }

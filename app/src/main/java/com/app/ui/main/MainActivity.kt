@@ -2,17 +2,20 @@ package com.app.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.app.galleryimage.R
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.recyclerview.widget.GridLayoutManager
-import com.app.util.Constants.Companion.nullData
-import com.app.util.NetworkState
 import com.app.util.UiHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity()
     @Inject lateinit var uiHelper: UiHelper
     private val mainViewModel : MainViewModel by viewModels()
     private val mainAdapter = MainAdapter()
+    private var coroutineJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -39,37 +43,51 @@ class MainActivity : AppCompatActivity()
     private fun subscribeObservers()
     {
         /*
-         * When a new page is available, we call submitList() method
-         * of the PagedListAdapter class
+         * When a new data is available, we call submitData() method
+         * of the PagingDataAdapter class
          * */
 
-        mainViewModel.getData().observe(this, Observer {
-            if(it != null)
-                mainAdapter.submitList(it)
-        })
+        // Make sure we cancel the previous job before creating a new one
+        coroutineJob?.cancel()
+        coroutineJob = lifecycleScope.launch {
+            @OptIn(ExperimentalCoroutinesApi::class)
+            mainViewModel.imgsLiveData.collectLatest {
+                it.let {
+                    mainAdapter.submitData(it)
+                }
+            }
+        }
 
         /*
          * Progress Updater
          * */
-        mainViewModel.networkState!!.observe(this, Observer {
+        mainAdapter.addLoadStateListener { loadState ->
 
-            if(it != null)
-            {
-                when(it)
-                {
-                    is NetworkState.Loading -> showProgressBar(true)
-                    is NetworkState.Success -> showProgressBar(false)
-                    is NetworkState.Error ->
-                    {
-                        showProgressBar(false)
-                        if(it.message == nullData)
-                            uiHelper.showSnackBar(mainActivityRootView, resources.getString(R.string.something_went_wrong))
-                        else
-                            uiHelper.showSnackBar(mainActivityRootView, resources.getString(R.string.error_network_connection))
-                    }
+            /*
+            * loadState.refresh - represents the load state for loading the PagingData for the first time.
+              loadState.prepend - represents the load state for loading data at the start of the list.
+              loadState.append - represents the load state for loading data at the end of the list.
+            * */
+
+            if (loadState.refresh is LoadState.Loading ||
+                loadState.append is LoadState.Loading)
+                showProgressBar(true)
+            else {
+                showProgressBar(false)
+
+                // If we have an error, show a toast
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error ->  loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
                 }
+                errorState?.let {
+                    Toast.makeText(this, it.error.toString(), Toast.LENGTH_LONG).show()
+                }
+
             }
-        })
+        }
     }
 
     private fun initRecyclerView() {

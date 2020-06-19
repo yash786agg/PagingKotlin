@@ -27,17 +27,20 @@ class MainBindingAdapter @Inject constructor(private val fresco: PipelineDraweeC
         GlobalScope.launch {
             try
             {
-                val response = imageBindingApi.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,photoList.id ,format, noJsonCallback).await()
+                val response = photoList.id?.let {
+                    imageBindingApi.fetchSingleImageAsync(flickrPhotosGetSizes, BuildConfig.API_Key,
+                        it,format, noJsonCallback).await()
+                }
 
                 withContext(Dispatchers.Main) {
                     // Perform operations on the main thread
                     when
                     {
-                        response.isSuccessful -> {
+                        response?.isSuccessful!! -> {
                             if(response.body() != null)
                             {
-                                if(!TextUtils.isEmpty(response.body()!!.sizes.size[1].source)) {
-                                    val imageUrl = response.body()!!.sizes.size[1].source
+                                if(!TextUtils.isEmpty(response.body()?.sizes?.size?.get(1)?.source)) {
+                                    val imageUrl = response.body()?.sizes?.size?.get(1)?.source
                                     val draweeController = fresco.setImageRequest(ImageRequest.fromUri(Uri.parse(imageUrl)))
                                         .setOldController(imageView.controller).build()
                                     imageView.controller = draweeController
