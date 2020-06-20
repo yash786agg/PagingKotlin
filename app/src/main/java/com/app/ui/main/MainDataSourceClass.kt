@@ -10,6 +10,8 @@ import com.app.util.Constants.Companion.format
 import com.app.util.Constants.Companion.kittenSearch
 import com.app.util.Constants.Companion.noJsonCallback
 import com.app.util.Constants.Companion.perPage
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class MainDataSourceClass @Inject constructor(private val mainApi: MainApi): PagingSource<Int, PhotoListModel>() {
@@ -28,7 +30,11 @@ class MainDataSourceClass @Inject constructor(private val mainApi: MainApi): Pag
                 prevKey = if (position == initialPageIndex) null else position - 1,
                 nextKey = if (items.photo.isEmpty()) null else position + 1
             )
-        } catch (exception : Exception) {
+        } catch (exception: IOException) {
+            return LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            return LoadResult.Error(exception)
+        }catch (exception : Exception) {
             LoadResult.Error(exception)
         }
     }
