@@ -12,9 +12,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.util.UiHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -50,8 +49,14 @@ class MainActivity : AppCompatActivity()
         // Make sure we cancel the previous job before creating a new one
         coroutineJob?.cancel()
         coroutineJob = lifecycleScope.launch {
-            @OptIn(ExperimentalCoroutinesApi::class)
-            mainViewModel.imgsLiveData.collectLatest {
+            /*@OptIn(ExperimentalCoroutinesApi::class)
+            mainViewModel.imageData().collectLatest {
+                it.let {
+                    mainAdapter.submitData(it)
+                }
+            }*/
+
+            mainViewModel.imageData.collect {
                 it.let {
                     mainAdapter.submitData(it)
                 }
